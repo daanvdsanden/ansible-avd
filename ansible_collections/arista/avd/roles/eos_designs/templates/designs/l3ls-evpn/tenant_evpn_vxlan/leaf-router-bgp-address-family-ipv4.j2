@@ -1,0 +1,19 @@
+{% for tenant in tenants | arista.avd.natural_sort if ( tenant in leaf.filter_tenants or "all" in leaf.filter_tenants ) and leaf.evpn_services_l2_only == false %}
+{%     if tenants[tenant].vrfs is defined %}
+{%         for vrf in tenants[tenant].vrfs | arista.avd.natural_sort if leaf.vrfs is not none and vrf in leaf.vrfs %}
+{%             if tenants[tenant].vrfs[vrf].bgp_peer_groups is arista.avd.defined %}
+{%                 for bgp_peer_group in tenants[tenant].vrfs[vrf].bgp_peer_groups %}
+{%                     if tenants[tenant].vrfs[vrf].bgp_peer_groups[bgp_peer_group].nodes is arista.avd.defined %}
+{%                         if inventory_hostname in tenants[tenant].vrfs[vrf].bgp_peer_groups[bgp_peer_group].nodes %}
+{%                             set peer_group_params = tenants[tenant].vrfs[vrf].bgp_peer_groups[bgp_peer_group] %}
+{%                             if peer_group_params.address_family is arista.avd.defined and peer_group_params.address_family['ipv4'] is arista.avd.defined %}
+      {{ bgp_peer_group }}:
+        {{ peer_group_params.address_family['ipv4'] }}
+{%                             endif %}
+{%                         endif %}
+{%                     endif %}
+{%                 endfor %}
+{%             endif %}
+{%         endfor %}
+{%     endif %}
+{% endfor %}

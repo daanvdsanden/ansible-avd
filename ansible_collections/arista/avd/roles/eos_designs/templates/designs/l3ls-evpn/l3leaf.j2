@@ -282,6 +282,7 @@ router_bgp:
   peer_groups:
 {% include 'designs/l3ls-evpn/fabric/bgp_base/leaf-router-bgp-peer-groups.j2' %}
 {% include 'designs/l3ls-evpn/fabric/bgp_overlay/switch-router-bgp-peer-groups-evpn.j2' %}
+{% include 'designs/l3ls-evpn/tenant_evpn_vxlan/leaf-tenant-router-bgp-vrf-peer-groups.j2' %}
   neighbor_interfaces:
 {% include 'designs/l3ls-evpn/fabric/bgp_base/leaf-router-bgp-rfc5549-neighbors.j2' %}
   neighbors:
@@ -295,6 +296,9 @@ router_bgp:
 {% include 'designs/l3ls-evpn/fabric/bgp_overlay/switch-router-bgp-address-family-evpn.j2' %}
   address_family_ipv4:
 {% include 'designs/l3ls-evpn/fabric/ebgp_underlay/leaf-router-bgp-address-family-ipv4.j2' %}
+{% include 'designs/l3ls-evpn/tenant_evpn_vxlan/leaf-router-bgp-address-family-ipv4.j2' %}
+  address_family_ipv6:
+{% include 'designs/l3ls-evpn/tenant_evpn_vxlan/leaf-router-bgp-address-family-ipv6.j2' %}
   address_family_rtc:
 {% include 'designs/l3ls-evpn/fabric/bgp_overlay/switch-router-bgp-address-family-rtc.j2' %}
 {# Tenant router bgp evpn #}

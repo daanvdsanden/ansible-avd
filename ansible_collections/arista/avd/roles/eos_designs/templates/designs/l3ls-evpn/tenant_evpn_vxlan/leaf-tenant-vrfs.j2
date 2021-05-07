@@ -7,7 +7,10 @@
 {%             endif %}
   {{ vrf }}:
     tenant: {{ tenant }}
-    ip_routing: true
+    ip_routing: {{ tenants[tenant].vrfs[vrf].ip_routing | arista.avd.default(true) | bool | lower }}
+{%             if tenants[tenant].vrfs[vrf].ipv6_routing is arista.avd.defined %}
+    ipv6_routing: {{ tenants[tenant].vrfs[vrf].ipv6_routing | bool | lower }}
+{%             endif %}
 {%         endfor %}
 {%     endif %}
 {% endfor %}
